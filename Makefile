@@ -8,6 +8,7 @@ LIBSO=0
 
 GEMM_FIXED=1
 BIAS_FIXED=1
+DATA_ANALYSIS=1
 
 # set GPU=1 and CUDNN=1 to speedup on GPU
 # set CUDNN_HALF=1 to further speedup 3 x times (Mixed-precision using Tensor Cores) on GPU Tesla V100, Titan V, DGX-2
@@ -76,6 +77,9 @@ CFLAGS+= -DGEMM_FIXED
 endif
 ifeq ($(BIAS_FIXED), 1) 
 CFLAGS+= -DBIAS_FIXED
+endif
+ifeq ($(DATA_ANALYSIS), 1) 
+CFLAGS+= -DDATA_ANALYSIS
 endif
 
 

@@ -20,7 +20,7 @@ def to_percent(y, position):
 
 
 
-filename="./weights_distribution/new_fixed_conv_weight.txt"
+filename="./weights_distribution/conv_weight.txt"
 weight=[]
 bias=[]
 f_map=[]
@@ -64,56 +64,29 @@ for i in range(0,len(weight)):
 	fig.subplots_adjust(top=0.8)#adjust sub plot
 	ax0, ax1, ax2 = axes.flatten()
 
-
-	'''
-	y=np_weight[i]
-	x=np_bias[i]
-	z=np_f_map[i]
-	fig = plt.figure()
-	ax = fig.add_subplot(111)
-	ax.hist(x, 50, density=True)
-	ax.hist(y, 50, density=True)
-	ax.hist(z, 50, density=True)
-	fig.canvas.draw()
-	'''
 	x=np_bias[i]
 	y=np_weight[i]
 	z=np_f_map[i]
-	'''
-	plt.hist(x,50, normed=1, alpha=0.5, label='bias')
-	plt.hist(y,50, normed=1, alpha=0.5, label='weight')
-	plt.hist(z,50, normed=1, alpha=0.5, label='feature map')
-	'''
-
 		
 	weights = np.ones_like(x)/float(len(x))
 	n, bins, patches = ax0.hist(x, 30 , histtype='bar',weights=weights )
-	(mu, sigma) = norm.fit(x)
-	t = mlab.normpdf( bins, mu, sigma)
+	#(mu, sigma) = norm.fit(x)
+	#t = mlab.normpdf( bins, mu, sigma)
 	#l = ax0.plot(bins, t, 'r--', linewidth=2)
 	ax0.set_title('bias')
-	# Create the formatter using the function to_percent. This multiplies all the
-	# default labels by 100, making them all percentages
-	#formatter = FuncFormatter(to_percent)
-	
-	# Set the formatter
-	#ax0.gca().yaxis.set_major_formatter(formatter)
-
-
-
 
 	weights = np.ones_like(y)/float(len(y))
 	n, bins, patches = ax1.hist(y, 30 , histtype='bar',weights=weights )
-	(mu, sigma) = norm.fit(y)
-	t = mlab.normpdf( bins, mu, sigma)
+	#(mu, sigma) = norm.fit(y)
+	#t = mlab.normpdf( bins, mu, sigma)
 	#l = ax1.plot(bins, t, 'r--', linewidth=2)
 	ax1.set_title('weight')
 
 
 	weights = np.ones_like(z)/float(len(z))
 	n, bins, patches = ax2.hist(z, 30 , histtype='bar',weights=weights )
-	(mu, sigma) = norm.fit(z)
-	t = mlab.normpdf( bins, mu, sigma)
+	#(mu, sigma) = norm.fit(z)
+	#t = mlab.normpdf( bins, mu, sigma)
 	#l = ax2.plot(bins, t, 'r--', linewidth=2)
 	ax2.set_title('feature map')
 
