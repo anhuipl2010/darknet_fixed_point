@@ -537,13 +537,13 @@ void add_bias_fixed(float *output, float *biases, int batch, int n, int size)
 {
     int i,j,b;
     double *Bt;
-    Bt=array2fixed(biases,n-1);
+    array2fixed(biases,n-1);
 
     for(b = 0; b < batch; ++b){
         for(i = 0; i < n; ++i){
             for(j = 0; j < size; ++j){
-                //output[(b*n + i)*size + j] += biases[i];
-                output[(b*n + i)*size + j] += Bt[i];
+                output[(b*n + i)*size + j] += biases[i];
+                //output[(b*n + i)*size + j] += Bt[i];
             }
         }
     }
@@ -879,6 +879,8 @@ void forward_convolutional_layer(convolutional_layer l, network_state state)
 
             im2col_cpu_custom(state.input, l.c, l.h, l.w, l.size, l.stride, l.pad, b);
 
+
+
 #ifndef GEMM_FIXED    
             gemm(0, 0, m, n, k, 1, a, k, b, n, 1, c, n);
             // bit-count to float    
@@ -901,7 +903,11 @@ void forward_convolutional_layer(convolutional_layer l, network_state state)
 #ifndef BIAS_FIXED
     add_bias(l.output, l.biases, l.batch, l.n, out_h*out_w);
 #else
-    add_bias_fixed(l.output, l.biases, l.batch, l.n, out_h*out_w);
+    if( state.index == 0)
+        add_bias_fixed(l.output, l.biases, l.batch, l.n, out_h*out_w);
+    else
+        add_bias(l.output, l.biases, l.batch, l.n, out_h*out_w);
+
 #endif
 
     //activate_array(l.output, m*n*l.batch, l.activation);
@@ -910,7 +916,8 @@ void forward_convolutional_layer(convolutional_layer l, network_state state)
     if(l.binary || l.xnor) swap_binary(&l);
 
 
-    //gen_weight(l.biases,l.weights,l.n,l.output,m*n*l.batch ,state.index);
+    //gen_weight(l.biases ,l.n, l.weights , l.size*l.size*l.c*l.n , l.output , l.n*out_h*out_w , state.index);
+
 
 
 }

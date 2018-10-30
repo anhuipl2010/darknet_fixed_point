@@ -2,7 +2,7 @@
 #include<stdlib.h>
 
 
-double float_to_fixed(double input,int integer,int fractional ){
+float float_to_fixed(float input,int integer,int fractional ){
     int tmp_fixed;
     int max_int =((1<<(integer-1))-1 ) ;
     int sign=1;
@@ -21,7 +21,7 @@ double float_to_fixed(double input,int integer,int fractional ){
 
 
 
-double *array2fixed(float *X,int length){
+void array2fixed(float *X,int length){
     //double *output = malloc(length*sizeof(double));// new double [length];
 
     int i_part=4,f_part=12,i;
@@ -29,5 +29,5 @@ double *array2fixed(float *X,int length){
         X[i] = float_to_fixed(X[i],i_part,f_part);
         //output[i] = float_to_fixed(X[i],i_part,f_part);
 
-            return X;//output;
+        //    return X;//output;
 }

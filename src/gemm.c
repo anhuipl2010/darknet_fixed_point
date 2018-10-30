@@ -2205,20 +2205,20 @@ float length_b=(K-1)*ldb+N-1 ;
 float length_c=(M-1)*ldc+N-1 ;  
 double *At,*Bt,*Ct;
     
-    A = array2fixed(A,length_a );
-    B = array2fixed(B,length_b );
+    array2fixed(A,length_a );
+    array2fixed(B,length_b );
 
 
     int i, j, k;
     for (i = 0; i < M; ++i) {
         for (k = 0; k < K; ++k) {
-            register double A_PART = ALPHA*A[i*lda + k];
+            register float A_PART = ALPHA*A[i*lda + k];
             for (j = 0; j < N; ++j) {
                 C[i*ldc + j] += A_PART*B[k*ldb + j];
             }
         }
     }
-    C = array2fixed(C,length_c);
+    array2fixed(C,length_c);
     //for(i=0;i< length_c ;i++)
     //    C[i] = Ct[i];
                 
